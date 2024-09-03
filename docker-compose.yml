@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    command: streamlit run main.py  # Ensure this path is correct
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - ./resource:/app/resource
+      - ./app:/app  # Ensure the app folder is properly mounted
