@@ -1,61 +1,66 @@
+# Portfolio-Based Cover Letter Generator with Docker
 
-```markdown
-# Portfolio-Based Cover Letter Generator
+This project generates personalized cover letters based on job postings and your portfolio. It extracts data from a job posting, matches it with your portfolio information in a CSV file, and creates a cover letter tailored to the job requirements using a powerful Language Model (LLM).
 
-This project helps generate personalized cover letters based on the job posting and your portfolio. The process involves extracting data from a job posting, matching it with your portfolio, and creating a cover letter tailored to the job requirements.
+## Data used in Project
 
-## Project Structure
-
-- **resources/my_portfolio.csv**: A CSV file containing two columns:
-  - **techstack**: The technologies or skills you possess.
-  - **portfolio_url**: The respective URLs of your portfolio related to each tech stack.
+* **resources/my_portfolio.csv**: A CSV file containing two columns:
+    * **techstack**: The technologies or skills you possess.
+    * **portfolio_url**: The respective URLs of your portfolio related to each tech stack.
 
 ## Workflow
 
-1. **Input the Job Posting URL**: The user provides the URL of the job posting.
-2. **Data Extraction**: The relevant data (job requirements, skills, experience, etc.) is extracted from the job posting.
-3. **JSON Creation**: The extracted data is converted into a JSON format containing all the relevant details.
-4. **Query Vector Database**: The JSON data is used to query a vector database, which contains the data from your `my_portfolio.csv` file.
-5. **Document Indexing**: Relevant documents (tech stacks) are indexed based on the job requirements.
-6. **Cover Letter Generation**: The relevant documents are provided to the LLM (Language Model) along with the job requirements in JSON format to generate a personalized cover letter.
+1. **Input Job Posting URL**: Provide the URL of the job posting.
+2. **Data Extraction**: Script extracts relevant data (job requirements, skills, experience, etc.) from the job posting.
+3. **JSON Creation**: Extracted data is converted into a JSON format.
+4. **Query Vector Database (using GROQ)**: Use the JSON data to query a vector database containing data from `my_portfolio.csv`. 
 
-## Setup
+5. **Document Indexing**: Relevant documents (tech stacks) are identified based on job requirements.
+6. **Cover Letter Generation**: The identified documents and job requirements are provided to the LLM to generate a personalized cover letter.
 
-### Step 1: Get API Key
+## Setup with Docker
 
-To get started, you first need to obtain an API key from the [GROQ Console](https://console.groq.com/keys). 
+This project utilizes Docker for a streamlined setup experience.
 
-Once you have the API key, update the `GROQ_API_KEY` value inside the `.env` file with the key you created.
+**Prerequisites:** Docker installed on your system.
 
-### Step 2: Install Dependencies
+**Steps:**
 
-To install the necessary dependencies, run the following command:
+1. **Obtain GROQ API Key**: 
+    * Sign up for a free account at [GROQ Console](https://console.groq.com/keys).
+    * Create a new project and get your API key.
+2. **Set Up Environment Variable**:
+    * Create a file named `.env` in the project's root directory.
+    * Add the following line to `.env`, replacing `your_api_key_here` with your actual key:
 
-```bash
-pip install -r requirements.txt
-```
+    ```
+    GROQ_API_KEY=your_api_key_here
+    ```
 
-### Step 3: Run the Application
+3. **Build the Docker Image**:
 
-Finally, to run the Streamlit application, use the following command:
+    ```bash
+    docker build -t cover-letter-generator .
+    ```
 
-```bash
-streamlit run ./main.py
-```
+4. **Run the Docker Container**:
+
+    ```bash
+    docker run -p 8501:8501 --env-file .env cover-letter-generator
+    ```
+
+    * This command maps port `8501` on your machine to port `8501` in the container and uses the `.env` file for environment variables.
 
 ## Usage
 
-1. Run the Streamlit app.
-2. Provide the job posting URL.
-3. The app will generate a personalized cover letter based on your portfolio and the job posting.
+1. Open your web browser and navigate to `http://localhost:8501`. This will launch the Streamlit app within the container.
+2. Provide the job posting URL in the app.
+3. Click "Generate Cover Letter" and the app will create a personalized letter based on your portfolio and the job requirements.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+We welcome contributions to this project! Please submit a Pull Request for any changes or improvements.
 
 ## License
 
 This project is licensed under the MIT License.
-```
-
-This `README.md` file provides an overview of your project, the workflow, setup instructions, and usage details.
