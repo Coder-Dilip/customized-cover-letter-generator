@@ -17,7 +17,7 @@ COPY app/ /app/
 COPY resource/ /app/resource/
 
 # Copy the tests directory into the container at /app/tests
-COPY tests/ /app/tests/
+COPY test/ /app/test/
 
 # Make port 8501 available to the world outside this container
 EXPOSE 8501
