@@ -26,4 +26,4 @@ EXPOSE 8501
 ENV STREAMLIT_PORT=8501
 
 # Run the tests by default, or change to your start command
-CMD ["pytest", "tests"]
+CMD ["pytest", "test"]
